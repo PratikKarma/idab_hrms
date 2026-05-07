@@ -1,0 +1,1 @@
+GET localhost/idabhrms/api/jobdetails̥

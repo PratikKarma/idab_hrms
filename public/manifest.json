@@ -1,0 +1,16 @@
+{
+    "name": "IDAB TECH - (HRMS)",
+    "short_name": "HRMS",
+    "display": "fullscreen",
+    "theme_color": "#ff7300",
+    "background_color": "#ff7575",
+    "description": "A Progressive Web Application setup for Laravel projects.",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

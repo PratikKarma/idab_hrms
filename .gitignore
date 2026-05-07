@@ -1,0 +1,69 @@
+# Laravel default ignores
+/vendor
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+.env
+.env.backup
+.env.*
+.phpunit.result.cache
+/storage/logs/laravel.log
+
+/storage/logs/
+!storage/logs/.gitignore
+# Storage folder ignores
+/storage/app/*
+!/storage/app/public/
+!/storage/app/public/.gitignore
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# Prevent tracking of uploaded files
+/storage/app/public/*
+/public/uploads/
+/public/backend/uploads/
+/storage/app/public/*
+/public/storage/
+/public/storage/**
+
+# Allow specific resource language files
+/resources/lang/*.json
+!/resources/lang/en.json
+!/resources/lang/bn.json
+!/resources/lang/ar.json
+
+# Ignore symlink and uploaded files
+/public/storage/
+/public/storage/**
+/storage/app/public/
+.env.*.backup
+
+# Editor and debug files
+/.idea
+/.vscode
+npm-debug.log
+yarn-error.log
+
+# Lock files
+yarn.lock
+package-lock.json
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Ignore dynamic storage and error logs
+/public/error_log
+/storage/*
+!/storage/.gitignore
+
+error_log
+/storage/logs/*
+/bootstrap/cache/*
+/storage/framework/*
+*.log
+storage/logs/laravel.log

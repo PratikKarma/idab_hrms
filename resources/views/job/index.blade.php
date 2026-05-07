@@ -156,7 +156,10 @@
                                 <td>{{ \Auth::user()->dateFormat($job->start_date) }}</td>
                                 <td>{{ \Auth::user()->dateFormat($job->end_date) }}</td>
                                 <td>
-                                    @if ($job->status == 'active')
+                                    @if($job->end_date && \Carbon\Carbon::parse($job->end_date)->isPast())
+                                        <span
+                                            class="badge bg-danger p-2 px-3  status-badge">{{ __('Expired') }}</span>
+                                    @elseif ($job->status == 'active')
                                         <span
                                             class="badge bg-success p-2 px-3  status-badge">{{ App\Models\Job::$status[$job->status] }}</span>
                                     @else

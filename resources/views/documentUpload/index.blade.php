@@ -53,7 +53,7 @@
                                                         <div class="action-btn bg-primary me-2">
                                                             <a class="mx-3 btn btn-sm align-items-center" data-bs-toggle="tooltip"
                                                     data-bs-original-title="{{ __('Download') }}"
-                                                                href="{{ $documentPath . '/' . $document->document }}"
+                                                                href="{{ rtrim($documentPath, '/') . '/' . $document->document }}"
                                                                 download>
                                                                 <span class="text-white"><i class="ti ti-download"></i></span>
                                                             </a>

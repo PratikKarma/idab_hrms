@@ -74,6 +74,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        {!! Form::label('email', __('Email'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
+                                        {!! Form::email('email', old('email'), [
+                                            'class' => 'form-control',
+                                            'required' => 'required',
+                                            'placeholder' => 'Enter employee email',
+                                        ]) !!}
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('address', __('Address'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>

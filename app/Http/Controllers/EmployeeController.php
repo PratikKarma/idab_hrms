@@ -277,6 +277,7 @@ class EmployeeController extends Controller
                     'name' => 'required',
                     'last_name' => 'required',
                     'dob' => 'required',
+                    'email' => 'required|unique:employees,email,' . $id . ',id',
                     'gender' => 'required',
                     'phone' => 'required|numeric',
                     'address' => 'required',
@@ -368,6 +369,11 @@ class EmployeeController extends Controller
             $input['documents'] = $document_implode;
 
             $employee->fill($input)->save();
+            if (!empty($request->email)) {
+                $user = User::find($employee->user_id);
+                $user->email = $request->email;
+                $user->save();
+            }
 
             if ($request->salary) {
                 return redirect()->route('setsalary.index')->with('success', 'Employee successfully updated.');

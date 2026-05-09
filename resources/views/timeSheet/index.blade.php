@@ -2,7 +2,9 @@
 @section('page-title')
     {{ __('Manage Timesheet') }}
 @endsection
-
+@php 
+    $company_settings = App\Models\Utility::settings();
+@endphp
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
     <li class="breadcrumb-item">{{ __('Timesheet') }}</li>
@@ -45,13 +47,13 @@
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                         <div class="btn-box">
                                             {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-                                            {{ Form::text('start_date', isset($_GET['start_date']) ? $_GET['start_date'] : '', ['class' => 'month-btn form-control datepicker w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}
+                                            {{ Form::date('start_date', isset($_GET['start_date']) ? $_GET['start_date'] : \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'month-btn form-control  w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                         <div class="btn-box">
                                             {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
-                                            {{ Form::text('end_date', isset($_GET['end_date']) ? $_GET['end_date'] : '', ['class' => 'month-btn form-control datepicker w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}    
+                                            {{ Form::date('end_date', isset($_GET['end_date']) ? $_GET['end_date'] : \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'month-btn form-control  w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}    
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
@@ -162,9 +164,8 @@
     </div>
 @endsection
 @push('script-page')
-@include('layouts.dateformat');
 
-    <!-- <script>
+    <script>
         $(document).ready(function() {
             var now = new Date();
             var month = (now.getMonth() + 1);
@@ -174,5 +175,5 @@
             var today = now.getFullYear() + '-' + month + '-' + day;
             $('.current_date').val(today);
         });
-    </script> -->
+    </script>
 @endpush

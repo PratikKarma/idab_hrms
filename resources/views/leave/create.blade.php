@@ -1,6 +1,7 @@
 @php
     $setting = App\Models\Utility::settings();
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 {{ Form::open(['url' => 'leave', 'method' => 'post', 'class' => 'needs-validation', 'novalidate']) }}
 <div class="modal-body">
@@ -103,7 +104,6 @@
     <input type="submit" value="{{ __('Create') }}" class="btn  btn-primary">
 </div>
 {{ Form::close() }}
-@include('layouts.dateformat');
 <script>
     $(document).ready(function() {
         var now = new Date();

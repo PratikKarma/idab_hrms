@@ -54,9 +54,9 @@
                                         {!! Form::label('dob', __('Date of Birth'), ['class' => 'form-label']) !!}
                                         <span class="text-danger pl-1">*</span>
 
-                                        {{ Form::text('dob', null, 
+                                        {{ Form::date('dob', null, 
                                             [
-                                                'class' => 'form-control datepicker w-100',
+                                                'class' => 'form-control w-100',
                                                 'required',
                                                 'autocomplete' => 'off',
                                                 'placeholder' => 'Select Date of Birth',
@@ -202,7 +202,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    {{ Form::label('shift_id', __('Select Employee Zone Time'), ['class' => 'form-label']) }}
+                                    {{ Form::label('shift_id', __('Select Company Zone Time'), ['class' => 'form-label']) }}
                                     <span class="text-danger pl-1">*</span>
 
                                     <div class="form-icon-user">
@@ -236,19 +236,28 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group ">
                                         {!! Form::label(' company_doj', __('Company Date Of Joining'), ['class'=> ' form-label']) !!}<span class="text-danger pl-1">*</span>
-                                        {{ Form::text('company_doj', 
-                                            !empty($employee->company_doj) 
-                                                ? \Carbon\Carbon::parse($employee->company_doj)->format($company_settings['site_date_format']) 
-                                                : null, 
+                                            {{ Form::date('company_doj', null, 
                                             [
-                                                'class' => 'form-control datepicker w-100',
+                                                'class' => 'form-control w-100',
                                                 'required',
                                                 'autocomplete' => 'off',
                                                 'placeholder' => 'Select company date of joining',
                                             ]) 
                                         }}
                                     </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ Form::label('lunch_hours', 'Hours') }}
+                                            {{ Form::number('lunch_hours', 0, ['class' => 'form-control', 'min' => 0]) }}
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            {{ Form::label('lunch_minutes', 'Minutes') }}
+                                            {{ Form::number('lunch_minutes', 0, ['class' => 'form-control', 'min' => 0, 'max' => 59]) }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -453,11 +462,10 @@
         }
     </script>
     <script>
-        
         $('#department_id').change(function() {
             var department_id = $(this).val();
             $.ajax({
-               url: '{{ route('employee.sub') }}',
+                url: '{{ route('employee.sub') }}',
                 type: "post",
                 data: {
                     '_token': '{{ csrf_token() }}',

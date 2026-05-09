@@ -37,7 +37,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}
-                {{ Form::date('date', null, ['class' => 'form-control current_date', 'autocomplete' => 'off']) }}
+                {{ Form::text('date', null, ['class' => 'form-control w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
@@ -75,7 +75,6 @@
 </div>
 
 {{ Form::close() }}
-
 <script>
     $(document).ready(function() {
         var now = new Date();

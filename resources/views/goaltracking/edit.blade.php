@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($goalTracking, ['route' => ['goaltracking.update', $goalTracking->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -31,13 +32,17 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('start_date', __('Start Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::text('start_date', null, ['class' => 'form-control datepicker','autocomplete'=>'off' ,'required' => 'required']) }}
+                {{ Form::date('start_date', !empty($goalTracking->start_date)
+                                        ? \Carbon\Carbon::parse($goalTracking->start_date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control w-100','autocomplete'=>'off' ,'required' => 'required']) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('end_date', __('End Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::text('end_date', null, ['class' => 'form-control datepicker','autocomplete'=>'off' ,'required' => 'required']) }}
+                {{ Form::date('end_date', !empty($goalTracking->end_date)
+                                        ? \Carbon\Carbon::parse($goalTracking->end_date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control w-100','autocomplete'=>'off' ,'required' => 'required']) }}
             </div>
         </div>
         <div class="col-md-12">
@@ -99,5 +104,4 @@
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
 </div>
-@include('layouts.dateformat');
 {{ Form::close() }}

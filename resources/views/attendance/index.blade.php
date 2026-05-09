@@ -3,6 +3,9 @@
     {{ __('Manage Attendance List') }}
 @endsection
 
+@php 
+    $company_settings = \App\Models\Utility::settings();
+@endphp
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
     <li class="breadcrumb-item">{{ __('Attendance List') }}</li>
@@ -13,7 +16,6 @@
 @endphp
 
 @push('script-page')
-@include('layouts.dateformat');
     <script>
         $('input[name="type"]:radio').on('change', function(e) {
             var type = $(this).val();
@@ -130,7 +132,7 @@
                                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12 date">
                                         <div class="btn-box">
                                             {{ Form::label('date', __('Date'), ['class' => 'form-label']) }}
-                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : '', ['class' => 'form-control month-btn datepicker w-100']) }}
+                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'form-control month-btn datepicker w-100']) }}
                                         </div>
                                     </div>
                                     @if (\Auth::user()->type != 'employee')

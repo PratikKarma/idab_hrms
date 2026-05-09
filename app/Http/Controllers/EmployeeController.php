@@ -156,6 +156,10 @@ class EmployeeController extends Controller
                 $company_start_time = isset($times[0]) ? trim($times[0]) : null;
                 $company_end_time   = isset($times[1]) ? trim($times[1]) : null;
             }
+            $hours = $request->lunch_hours ?? 0;
+            $minutes = $request->lunch_minutes ?? 0;
+
+            $totalMinutes = ($hours * 60) + $minutes;
 
             $employee = Employee::create(
                 [
@@ -184,6 +188,7 @@ class EmployeeController extends Controller
                     'bank_identifier_code' => $request['bank_identifier_code'],
                     'branch_location' => $request['branch_location'],
                     'tax_payer_id' => $request['tax_payer_id'],
+                    'lunch_break' => $totalMinutes,
                     'created_by' => Auth::user()->creatorId(),
                 ]
             );
@@ -637,7 +642,6 @@ class EmployeeController extends Controller
             $escapedErrorSummary = addslashes($errorSummary . $htmlDetails);
 
             return redirect()->back()->with('error', $escapedErrorSummary);
-
         }
     }
     public function check_branch($branch_name)
@@ -968,8 +972,7 @@ class EmployeeController extends Controller
         $termination = Termination::where('employee_id', $id)->where('created_by', Auth::user()->creatorId())->first();
         $experience_certificate = ExperienceCertificate::where('lang', $currantLang)->where('created_by', Auth::user()->creatorId())->first();
         $date = date('Y-m-d');
-        $employees = Employee::where('id', $id)->where('created_by', Auth::user()->creatorId())->first();
-        ;
+        $employees = Employee::where('id', $id)->where('created_by', Auth::user()->creatorId())->first();;
         $settings = Utility::settings();
 
         if ($employees && $employees->company_start_time && $employees->company_end_time) {
@@ -1165,7 +1168,7 @@ class EmployeeController extends Controller
         } else {
             $employees = Employee::where('user_id', '=', $request->employee_id)->get();
         }
-        
+
         return response()->json([
             'status' => 'success',
             'message' => __('Employee list get successfully.'),

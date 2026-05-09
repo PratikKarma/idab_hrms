@@ -1,7 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
 @endphp
-@include('layouts.dateformat');
 
 {{ Form::open(['url' => 'deposit', 'method' => 'post', 'class' => 'needs-validation', 'novalidate']) }}
 <div class="modal-body">
@@ -35,7 +34,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}
-                {{ Form::text('date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
+                {{ Form::date('date', null, ['class' => 'form-control  w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">

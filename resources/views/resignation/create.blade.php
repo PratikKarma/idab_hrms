@@ -26,11 +26,11 @@
         @endif
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('notice_date', __('Resignation Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('notice_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::date('notice_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('resignation_date', __('Last Working Day'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('resignation_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::date('resignation_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-12">
             {{ Form::label('description', __('Reason'), ['class' => 'col-form-label']) }}<x-required></x-required>
@@ -44,7 +44,6 @@
 </div>
 
 {{ Form::close() }}
-
 <script>
     $(document).ready(function() {
         var now = new Date();

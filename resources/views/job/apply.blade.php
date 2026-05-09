@@ -144,7 +144,7 @@
                                     @if (!empty($job->applicant) && in_array('dob', explode(',', $job->applicant)))
                                         <div class="form-group">
                                             {!! Form::label('dob', __('Date of Birth'), ['class' => 'form-label']) !!}<x-required></x-required>
-                                            {!! Form::date('dob', old('dob'), ['class' => 'form-control datepicker w-100', 'required' => 'required']) !!}
+                                            {!! Form::date('dob', old('dob'), ['class' => 'form-control w-100', 'required' => 'required']) !!}
                                         </div>
                                     @endif
                                 </div>

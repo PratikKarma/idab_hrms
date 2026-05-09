@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($expense, ['route' => ['expense.update', $expense->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -71,4 +72,6 @@
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
 </div>
+
 {{ Form::close() }}
+

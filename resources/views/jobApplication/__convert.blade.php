@@ -39,7 +39,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('dob', __('Date of Birth'), ['class' => 'col-form-label']) !!}<span class="text-danger pl-1">*</span>
-                            {!! Form::text('dob', !empty($jobOnBoard->applications) ? $jobOnBoard->applications->dob : '', ['class' => 'form-control datepicker']) !!}
+                            {!! Form::date('dob', !empty($jobOnBoard->applications) ? $jobOnBoard->applications->dob : '', ['class' => 'form-control']) !!}
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                     </div>
                     <div class="form-group col-md-6 ">
                         {!! Form::label('company_doj', __('Company Date Of Joining'), ['class' => 'col-form-label']) !!}
-                        {!! Form::date('company_doj', $jobOnBoard->joining_date, ['class' => 'form-control datepicker', 'required' => 'required']) !!}
+                        {!! Form::date('company_doj', $jobOnBoard->joining_date, ['class' => 'form-control ', 'required' => 'required']) !!}
                     </div>
                 </div>
             </div>

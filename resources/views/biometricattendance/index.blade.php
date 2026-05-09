@@ -50,7 +50,7 @@
                                             'start_date',
                                             isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m-d', strtotime('-7 days')),
                                             [
-                                                'class' => 'form-control datepicker w-100'',
+                                                'class' => 'form-control  w-100'',
                                                 'placeholder' => 'Select Start Date',
                                                 'id' => 'start_date',
                                             ],

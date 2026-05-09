@@ -23,7 +23,7 @@ return [
     */
     'routes' => [
         'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chats'),
-        'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web','auth', 'Pusher']),
+        'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web', 'auth', 'Pusher']),
         'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'App\Http\Controllers\vendor\Chatify'),
     ],
     'api_routes' => [
@@ -38,12 +38,12 @@ return [
     |-------------------------------------
     */
     'pusher' => [
-        'key' => env('PUSHER_APP_KEY'),
-        'secret' => env('PUSHER_APP_SECRET'),
-        'app_id' => env('PUSHER_APP_ID'),
+        'key' => 'dummy',
+        'secret' => 'dummy',
+        'app_id' => 'dummy',
         'options' => [
-            'cluster' => env('PUSHER_APP_CLUSTER'),
-            // 'encrypted' => false,
+            'cluster' => 'mt1',
+            'useTLS' => true,
         ],
     ],
 
@@ -79,8 +79,8 @@ return [
     'attachments' => [
         'folder' => 'attachments',
         'download_route_name' => 'attachments.download',
-        'allowed_images' => (array) ['png','jpg','jpeg','gif'],
-        'allowed_files' => (array) ['zip','rar','txt'],
+        'allowed_images' => (array) ['png', 'jpg', 'jpeg', 'gif'],
+        'allowed_files' => (array) ['zip', 'rar', 'txt'],
         'max_upload_size' => env('CHATIFY_MAX_FILE_SIZE', 150), // MB
     ],
 

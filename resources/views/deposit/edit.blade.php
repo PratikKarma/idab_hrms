@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($deposit, ['route' => ['deposit.update', $deposit->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -32,7 +33,9 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}
-                {{ Form::text('date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
+                {{ Form::date('date', !empty($deposit->date)
+                                        ? \Carbon\Carbon::parse($deposit->date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
@@ -71,6 +74,5 @@
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
 </div>
-@include('layouts.dateformat');
 
 {{ Form::close() }}

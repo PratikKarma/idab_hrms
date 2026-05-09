@@ -31,7 +31,7 @@
         @endif
         <div class="form-group col-md-6">
             {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('date', '', ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off', 'required' => 'required', 'placeholder' => 'Select date']) }}
+            {{ Form::date('date', '', ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required', 'placeholder' => 'Select date']) }}
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('hours', __('Hours'), ['class' => 'col-form-label']) }}<x-required></x-required>

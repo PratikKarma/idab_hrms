@@ -18,6 +18,7 @@
     } else {
         $themeColor = $color;
     }
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 <!DOCTYPE html>
@@ -25,7 +26,24 @@
 
 <head>
     @include('layouts.pwa_head')
+<script>
+    var laravelFormat = "{{ $company_settings['site_date_format'] }}";
 
+    // var formatMap = {
+    //     "Y-m-d": "Y-m-d",
+    //     "d-m-Y": "d-m-Y",
+    //     "m-d-Y": "m-d-Y",
+    //     "d/m/Y": "d/m/Y",
+    //     "m/d/Y": "m/d/Y",
+    //     "M j, Y": "M j, Y"
+    // };
+
+    // flatpickr(".datepicker", {
+    //     dateFormat: formatMap[laravelFormat] || "Y-m-d",
+    //     maxDate: "today",
+    //     //defaultDate: "today"
+    // });
+</script>
     <title>
         {{ \App\Models\Utility::getValByName('title_text') ? \App\Models\Utility::getValByName('title_text') : config('app.name', 'HRMGo SaaS') }}
         - @yield('page-title')</title>
@@ -596,6 +614,7 @@
             show_toastr('Error', '{!! $message !!}', 'error');
         </script>
     @endif
+    @include('layouts.dateformat')
 
     <script>
         (function () {
@@ -674,6 +693,7 @@
           });
         })();
     </script>
+
 
     @stack('script-page')
 

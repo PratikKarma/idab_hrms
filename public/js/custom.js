@@ -151,6 +151,7 @@ function show_toastr(type, message) {
     $('#liveToast .toast-body').html(message);
 }
 
+
 $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true"], div[data-ajax-popup="true"]', function () {
 
     var title1 = $(this).data("title");
@@ -223,6 +224,8 @@ $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true
                 });
             }
 
+            // window.initFlatpickr = initAll;
+         window.initFlatpickrDates?.($('#commonModal')[0]);
         },
         error: function (data) {
             data = data.responseJSON;

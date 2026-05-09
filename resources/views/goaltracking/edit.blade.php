@@ -31,13 +31,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('start_date', __('Start Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::text('start_date', null, ['class' => 'form-control d_week','autocomplete'=>'off' ,'required' => 'required']) }}
+                {{ Form::text('start_date', null, ['class' => 'form-control datepicker','autocomplete'=>'off' ,'required' => 'required']) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('end_date', __('End Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::text('end_date', null, ['class' => 'form-control d_week','autocomplete'=>'off' ,'required' => 'required']) }}
+                {{ Form::text('end_date', null, ['class' => 'form-control datepicker','autocomplete'=>'off' ,'required' => 'required']) }}
             </div>
         </div>
         <div class="col-md-12">
@@ -99,4 +99,5 @@
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
 </div>
+@include('layouts.dateformat');
 {{ Form::close() }}

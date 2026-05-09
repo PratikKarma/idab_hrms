@@ -32,7 +32,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}
-                {{ Form::date('date', null, ['class' => 'form-control', 'autocomplete' => 'off']) }}
+                {{ Form::text('date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
@@ -71,4 +71,6 @@
     <input type="button" value="Cancel" class="btn btn-light" data-bs-dismiss="modal">
     <input type="submit" value="{{ __('Update') }}" class="btn btn-primary">
 </div>
+@include('layouts.dateformat');
+
 {{ Form::close() }}

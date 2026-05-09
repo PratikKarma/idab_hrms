@@ -44,8 +44,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             {!! Form::label('dob', __('Date of Birth'), ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                            {!! Form::date('dob', null, [
-                                                'class' => 'form-control',
+                                            {!! Form::text('dob', null, [
+                                                'class' => 'form-control datepicker',
                                                 'required' => 'required',
                                                 'autocomplete' => 'off',
                                                 'placeholder' => 'Select Date of Birth',
@@ -217,10 +217,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-6">
                                             {!! Form::label('company_doj', 'Company Date Of Joining', ['class' => 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                            {!! Form::date('company_doj', null, [
-                                                'class' => 'form-control ',
+                                            {!! Form::text('company_doj', null, [
+                                                'class' => 'form-control datepicker w-100',
                                                 'id' => 'data_picker2',
                                                 'required' => 'required',
                                             ]) !!}
@@ -497,6 +497,7 @@
         </div>
     </div>
 @endsection
+
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -520,6 +521,8 @@
     </div>
 </div>
 @push('script-page')
+@include('layouts.dateformat');
+
     <script type="text/javascript">
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {

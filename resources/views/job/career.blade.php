@@ -22,8 +22,6 @@
 @endphp
 
 <!DOCTYPE html>
-
-<html lang="en">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $SITE_RTL == 'on' ? 'rtl' : '' }}">
 
 <head>
@@ -73,6 +71,9 @@
         :root {
             --color-customColor: <?=$color ?>;
         }
+        .placedjob-section .section-title {
+            text-align: -webkit-center !important;
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('css/custom-color.css') }}">
 
@@ -98,33 +99,37 @@
                 </div>
                 <div class="container">
                     <div class="job-banner-content text-center text-white">
-                        <h1 class="text-white mb-3">
+                        <h1 class="text-primary mb-2">
                             {{ __(' We help') }} <br> {{ __('businesses grow') }}
                         </h1>
-                        <p>{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
+                        <p class="text-black">{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
                     </div>
                 </div>
             </section>
             <section class="placedjob-section">
                 <div class="container">
-                    <div class="section-title bg-light">
+                    <div class="section-title mb-5"> 
                         @php
                             $totaljob = \App\Models\Job::where('created_by', '=', $id)->count();
                         @endphp
+                        <h2 class="h1 mb-3">
+                            <span class="text-primary">+{{ $totaljob }}</span>
+                            {{ __('Job openings') }}
+                        </h2>
 
-                        <h2 class="h1 mb-3"> <span class="text-primary">+{{ $totaljob }}
-                            </span>{{ __('Job openings') }}</h2>
-                        <p>{{ __('Always looking for better ways to do things, innovate') }} <br>
-                            {{ __('and help people achieve their goals') }}.</p>
+                        <p class="mb-0">
+                            {{ __('Always looking for better ways to do things, innovate') }} <br>
+                            {{ __('and help people achieve their goals') }}.
+                        </p>
                     </div>
                     <div class="row g-4">
                         @foreach ($jobs as $job)
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 job-card">
                                 <div class="job-card-body">
-                                    <div class="d-flex mb-3 align-items-center justify-content-between ">
+                                    <div class="d-flex mb-3 align-items-center justify-content-between">
                                         <img src="{{ asset('/storage/uploads/job/figma.png') }}" alt="">
                                         @if (!empty($job->branches) ? $job->branches->name : '')
-                                            <span>{{ !empty($job->branches) ? $job->branches->name : '' }} <i
+                                            <span class="text-muted small">{{ !empty($job->branches) ? $job->branches->name : '' }} <i
                                                     class="ti ti-map-pin ms-1"></i></span>
                                         @endif
                                     </div>
@@ -132,21 +137,21 @@
                                         <a href="{{ route('job.requirement', [$job->code, !empty($job) ? (!empty($job->createdBy->lang) ? $job->createdBy->lang : 'en') : 'en']) }}"
                                             class="text-dark">{{ $job->title }}</a>
                                     </h5>
-                                    <div
-                                        class="d-flex mb-3 align-items-start flex-column flex-xl-row flex-md-row flex-lg-column">
-                                        <span class="d-inline-block me-2"> <i class="ti ti-circle-plus "></i>
+                                    <div class="job-card-details mb-4">
+                                        <span><i class="ti ti-circle-plus me-2"></i>
                                             {{ $job->position }} {{ __('position available') }}</span>
                                     </div>
 
-                                    <div class="d-flex flex-wrap gap-1 align-items-center">
+                                    <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
                                         @foreach (explode(',', $job->skill) as $skill)
-                                            <span class="badge rounded  p-2 bg-primary">{{ $skill }}</span>
+                                            <span class="badge rounded-pill px-3 py-2 bg-light text-primary border border-primary">{{ $skill }}</span>
                                         @endforeach
-
                                     </div>
 
-                                    <a href="{{ route('job.requirement', [$job->code, !empty($job) ? (!empty($job->createdBy->lang) ? $job->createdBy->lang : 'en') : 'en']) }}"
-                                        class="btn btn-primary w-100 mt-4">{{ __('Read more') }}</a>
+                                    <div class="job-card-footer mt-auto">
+                                        <a href="{{ route('job.requirement', [$job->code, !empty($job) ? (!empty($job->createdBy->lang) ? $job->createdBy->lang : 'en') : 'en']) }}"
+                                            class="btn btn-primary w-100">{{ __('Read more') }}</a>
+                                    </div>
 
                                 </div>
                             </div>
@@ -157,8 +162,6 @@
             </section>
         </div>
     </div>
-</body>
-
 
 <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>

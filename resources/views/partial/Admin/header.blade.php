@@ -8,8 +8,8 @@
         ->where('seen', 0)
         ->count();
     $unseen_count = DB::select('SELECT from_id, COUNT(*) AS totalmasseges FROM ch_messages WHERE seen = 0 GROUP BY from_id');
-@endphp
 
+@endphp
 
 @if (isset($setting['cust_theme_bg']) && $setting['cust_theme_bg'] == 'on')
     <header class="dash-header transprent-bg">
@@ -181,6 +181,7 @@
 @push('scripts')
     {{-- @include('Chatify::layouts.modals') --}}
     <script>
+
         $('#msg-btn').click(function() {
             let contactsPage = 1;
             let contactsLoading = false;

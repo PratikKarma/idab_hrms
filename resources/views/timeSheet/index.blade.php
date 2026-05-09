@@ -45,13 +45,13 @@
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                         <div class="btn-box">
                                             {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-                                            {{ Form::date('start_date', isset($_GET['start_date']) ? $_GET['start_date'] : '', ['class' => 'month-btn form-control current_date', 'autocomplete' => 'off', 'id' => 'current_date']) }}
+                                            {{ Form::text('start_date', isset($_GET['start_date']) ? $_GET['start_date'] : '', ['class' => 'month-btn form-control datepicker w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                         <div class="btn-box">
                                             {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
-                                            {{ Form::date('end_date', isset($_GET['end_date']) ? $_GET['end_date'] : '', ['class' => 'month-btn form-control current_date', 'autocomplete' => 'off', 'id' => 'current_date']) }}
+                                            {{ Form::text('end_date', isset($_GET['end_date']) ? $_GET['end_date'] : '', ['class' => 'month-btn form-control datepicker w-100', 'autocomplete' => 'off', 'id' => 'current_date']) }}    
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
@@ -161,9 +161,10 @@
         </div>
     </div>
 @endsection
-
 @push('script-page')
-    <script>
+@include('layouts.dateformat');
+
+    <!-- <script>
         $(document).ready(function() {
             var now = new Date();
             var month = (now.getMonth() + 1);
@@ -173,5 +174,5 @@
             var today = now.getFullYear() + '-' + month + '-' + day;
             $('.current_date').val(today);
         });
-    </script>
+    </script> -->
 @endpush

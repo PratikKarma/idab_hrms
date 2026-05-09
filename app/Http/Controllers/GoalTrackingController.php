@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Employee;
 use App\Models\GoalTracking;
 use App\Models\GoalType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class GoalTrackingController extends Controller
@@ -58,6 +59,9 @@ class GoalTrackingController extends Controller
     {
         if(\Auth::user()->can('Create Goal Tracking'))
         {
+            $company_setting = \App\Models\Utility::settings();
+            $start_date = Carbon::createFromFormat($company_setting['site_date_format'], $request->start_date)->format('Y-m-d');
+            $end_date   = Carbon::createFromFormat($company_setting['site_date_format'], $request->end_date)->format('Y-m-d');
 
             $validator = \Validator::make(
                 $request->all(), [
@@ -78,8 +82,8 @@ class GoalTrackingController extends Controller
             $goalTracking                     = new GoalTracking();
             $goalTracking->branch             = $request->branch;
             $goalTracking->goal_type          = $request->goal_type;
-            $goalTracking->start_date         = $request->start_date;
-            $goalTracking->end_date           = $request->end_date;
+            $goalTracking->start_date         = $start_date;
+            $goalTracking->end_date           = $end_date;
             $goalTracking->subject            = $request->subject;
             $goalTracking->target_achievement = $request->target_achievement;
             $goalTracking->description        = $request->description;
@@ -127,6 +131,10 @@ class GoalTrackingController extends Controller
         if(\Auth::user()->can('Edit Goal Tracking'))
         {
             $goalTracking = GoalTracking::find($id);
+            $company_setting = \App\Models\Utility::settings();
+            $start_date = Carbon::createFromFormat($company_setting['site_date_format'], $request->start_date)->format('Y-m-d');
+            $end_date   = Carbon::createFromFormat($company_setting['site_date_format'], $request->end_date)->format('Y-m-d');
+
             $validator    = \Validator::make(
                 $request->all(), [
                                    'branch' => 'required',
@@ -145,8 +153,8 @@ class GoalTrackingController extends Controller
 
             $goalTracking->branch             = $request->branch;
             $goalTracking->goal_type          = $request->goal_type;
-            $goalTracking->start_date         = $request->start_date;
-            $goalTracking->end_date           = $request->end_date;
+            $goalTracking->start_date         = $start_date;
+            $goalTracking->end_date           = $end_date;
             $goalTracking->subject            = $request->subject;
             $goalTracking->target_achievement = $request->target_achievement;
             $goalTracking->status             = $request->status;

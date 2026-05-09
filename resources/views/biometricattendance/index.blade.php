@@ -46,11 +46,11 @@
                                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 date">
                                     <div class="btn-box">
                                         {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-                                        {!! Form::date(
+                                        {!! Form::text(
                                             'start_date',
                                             isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m-d', strtotime('-7 days')),
                                             [
-                                                'class' => 'form-control ',
+                                                'class' => 'form-control datepicker w-100'',
                                                 'placeholder' => 'Select Start Date',
                                                 'id' => 'start_date',
                                             ],

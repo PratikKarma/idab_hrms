@@ -27,6 +27,9 @@ class AttendanceEmployeeController extends Controller
             $department = Department::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $department->prepend('All', '');
 
+              $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             if (\Auth::user()->type == 'employee') {
                 $emp = !empty(\Auth::user()->employee) ? \Auth::user()->employee->id : 0;
 
@@ -50,8 +53,8 @@ class AttendanceEmployeeController extends Controller
                             $end_date,
                         ]
                     );
-                } elseif ($request->type == 'daily' && !empty($request->date)) {
-                    $attendanceEmployee->where('date', $request->date);
+                } elseif ($request->type == 'daily' && !empty($date)) {
+                    $attendanceEmployee->where('date', $date);
                 } else {
                     $month      = date('m');
                     $year       = date('Y');
@@ -108,8 +111,8 @@ class AttendanceEmployeeController extends Controller
                             $end_date,
                         ]
                     );
-                } elseif ($request->type == 'daily' && !empty($request->date)) {
-                    $attendanceEmployee->where('date', $request->date);
+                } elseif ($request->type == 'daily' && !empty($date)) {
+                    $attendanceEmployee->where('date', $date);
                 } else {
 
                     $month      = date('m');
@@ -176,6 +179,9 @@ class AttendanceEmployeeController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             $employee = Employee::find($request->employee_id);
 
             if ($employee && $employee->company_start_time && $employee->company_end_time) {
@@ -185,7 +191,7 @@ class AttendanceEmployeeController extends Controller
                 $startTime  = Utility::getValByName('company_start_time');
                 $endTime    = Utility::getValByName('company_end_time');
             }
-            $attendance = AttendanceEmployee::where('employee_id', '=', $request->employee_id)->where('date', '=', $request->date)->where('clock_out', '=', '00:00:00')->get()->toArray();
+            $attendance = AttendanceEmployee::where('employee_id', '=', $request->employee_id)->where('date', '=', $date)->where('clock_out', '=', '00:00:00')->get()->toArray();
             if ($attendance) {
                 return redirect()->route('attendanceemployee.index')->with('error', __('Employee Attendance Already Created.'));
             } else {
@@ -220,7 +226,7 @@ class AttendanceEmployeeController extends Controller
 
                 $employeeAttendance                = new AttendanceEmployee();
                 $employeeAttendance->employee_id   = $request->employee_id;
-                $employeeAttendance->date          = $request->date;
+                $employeeAttendance->date          = $date;
                 $employeeAttendance->status        = 'Present';
                 $employeeAttendance->clock_in      = $request->clock_in . ':00';
                 $employeeAttendance->clock_out     = $request->clock_out . ':00';
@@ -257,8 +263,11 @@ class AttendanceEmployeeController extends Controller
     public function update(Request $request, $id)
     {
         if (\Auth::user()->type == 'company' || \Auth::user()->type == 'hr') {
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             $employeeId      = AttendanceEmployee::where('employee_id', $request->employee_id)->first();
-            $check = AttendanceEmployee::where('id', '=', $id)->where('employee_id', '=', $request->employee_id)->where('date', $request->date)->first();
+            $check = AttendanceEmployee::where('id', '=', $id)->where('employee_id', '=', $request->employee_id)->where('date',  $date)->first();
 
             if (!empty($employeeId) || !empty($check)) {
                 $employee = Employee::find($request->employee_id);
@@ -361,8 +370,8 @@ class AttendanceEmployeeController extends Controller
             $attendanceEmployee['early_leaving'] = $earlyLeaving;
             $attendanceEmployee['overtime']      = $overtime;
 
-            if (!empty($request->date)) {
-                $attendanceEmployee['date']       =  $request->date;
+            if (!empty($date)) {
+                $attendanceEmployee['date']       =  $date;
             }
 
             AttendanceEmployee::where('id', $id)->update($attendanceEmployee);
@@ -584,15 +593,18 @@ class AttendanceEmployeeController extends Controller
             $branch = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $branch->prepend('Select Branch', '');
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             $department = Department::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $department->prepend('Select Department', '');
 
             $employees = [];
             if (!empty($request->branch) && !empty($request->department) && $request->department >= 0) {
-                $employees = Employee::where('created_by', \Auth::user()->creatorId())->where('branch_id', $request->branch)->where('department_id', $request->department)->where('company_doj', '<=', $request->date)->get();
+                $employees = Employee::where('created_by', \Auth::user()->creatorId())->where('branch_id', $request->branch)->where('department_id', $request->department)->where('company_doj', '<=', $date)->get();
             } elseif (!empty($request->branch) && empty($request->department) && $request->department == '0') {
                 $employees = Employee::where('created_by', \Auth::user()->creatorId())->where('branch_id', $request->branch)
-                    ->where('company_doj', '<=', $request->date)->get();
+                    ->where('company_doj', '<=', $date)->get();
             }
             return view('attendance.bulk', compact('employees', 'branch', 'department'));
         } else {
@@ -604,7 +616,8 @@ class AttendanceEmployeeController extends Controller
     {
         if (\Auth::user()->can('Create Attendance')) {
             if (!empty($request->branch) && !empty($request->department)) {
-                $date      = $request->date;
+                  $companySettings = Utility::settings();
+                $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
 
                 $employees = $request->employee_id;
                 $atte      = [];
@@ -655,7 +668,7 @@ class AttendanceEmployeeController extends Controller
                             $overtime = '00:00:00';
                         }
 
-                        $attendance = AttendanceEmployee::where('employee_id', '=', $employee)->where('date', '=', $request->date)->first();
+                        $attendance = AttendanceEmployee::where('employee_id', '=', $employee)->where('date', '=', $date)->first();
 
                         if (!empty($attendance)) {
                             $employeeAttendance = $attendance;
@@ -665,7 +678,7 @@ class AttendanceEmployeeController extends Controller
                             $employeeAttendance->created_by  = \Auth::user()->creatorId();
                         }
 
-                        $employeeAttendance->date          = $request->date;
+                        $employeeAttendance->date          = $date;
                         $employeeAttendance->status        = 'Present';
                         $employeeAttendance->clock_in      = $in;
                         $employeeAttendance->clock_out     = $out;
@@ -675,7 +688,7 @@ class AttendanceEmployeeController extends Controller
                         $employeeAttendance->total_rest    = '00:00:00';
                         $employeeAttendance->save();
                     } else {
-                        $attendance = AttendanceEmployee::where('employee_id', '=', $employee)->where('date', '=', $request->date)->first();
+                        $attendance = AttendanceEmployee::where('employee_id', '=', $employee)->where('date', '=', $date)->first();
 
                         if (!empty($attendance)) {
                             $employeeAttendance = $attendance;
@@ -686,7 +699,7 @@ class AttendanceEmployeeController extends Controller
                         }
 
                         $employeeAttendance->status        = 'Leave';
-                        $employeeAttendance->date          = $request->date;
+                        $employeeAttendance->date          = $date;
                         $employeeAttendance->clock_in      = '00:00:00';
                         $employeeAttendance->clock_out     = '00:00:00';
                         $employeeAttendance->late          = '00:00:00';

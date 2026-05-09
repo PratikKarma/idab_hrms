@@ -6,6 +6,8 @@ use App\Exports\TimesheetExport;
 use App\Imports\TimesheetImport;
 use App\Models\Employee;
 use App\Models\TimeSheet;
+use App\Models\Utility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -70,6 +72,8 @@ class TimeSheetController extends Controller
     public function store(Request $request)
     {
         if (\Auth::user()->can('Create TimeSheet')) {
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
             $timeSheet = new Timesheet();
             if (\Auth::user()->type == 'employee') {
                 $timeSheet->employee_id = \Auth::user()->id;
@@ -77,13 +81,13 @@ class TimeSheetController extends Controller
                 $timeSheet->employee_id = $request->employee_id;
             }
 
-            $timeSheetCheck = TimeSheet::where('date', $request->date)->where('employee_id', $timeSheet->employee_id)->first();
+            $timeSheetCheck = TimeSheet::where('date', $date)->where('employee_id', $timeSheet->employee_id)->first();
 
             if (!empty($timeSheetCheck)) {
                 return redirect()->back()->with('error', __('Timesheet already created in this day.'));
             }
 
-            $timeSheet->date       = $request->date;
+            $timeSheet->date       = $date;
             $timeSheet->hours      = $request->hours;
             $timeSheet->remark     = $request->remark;
             $timeSheet->created_by = \Auth::user()->creatorId();
@@ -117,6 +121,9 @@ class TimeSheetController extends Controller
     {
         if (\Auth::user()->can('Edit TimeSheet')) {
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             $timeSheet = Timesheet::find($id);
             if (\Auth::user()->type == 'employee') {
                 $timeSheet->employee_id = \Auth::user()->id;
@@ -124,13 +131,13 @@ class TimeSheetController extends Controller
                 $timeSheet->employee_id = $request->employee_id;
             }
 
-            $timeSheetCheck = TimeSheet::where('date', $request->date)->where('employee_id', $timeSheet->employee_id)->first();
+            $timeSheetCheck = TimeSheet::where('date', $date)->where('employee_id', $timeSheet->employee_id)->first();
 
             if (!empty($timeSheetCheck) && $timeSheetCheck->id != $id) {
                 return redirect()->back()->with('error', __('Timesheet already created in this day.'));
             }
 
-            $timeSheet->date   = $request->date;
+            $timeSheet->date   = $date;
             $timeSheet->hours  = $request->hours;
             $timeSheet->remark = $request->remark;
             $timeSheet->save();

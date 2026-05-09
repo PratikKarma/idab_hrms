@@ -8,6 +8,8 @@ use App\Models\Deposit;
 use App\Models\IncomeType;
 use App\Models\Payer;
 use App\Models\PaymentType;
+use App\Models\Utility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -68,11 +70,13 @@ class DepositController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
+            $companySettings = Utility ::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
 
             $deposit                     = new Deposit();
             $deposit->account_id         = $request->account_id;
             $deposit->amount             = $request->amount;
-            $deposit->date               = $request->date;
+            $deposit->date               = $date;
             $deposit->income_category_id = $request->income_category_id;
             $deposit->payer_id           = $request->payer_id;
             $deposit->payment_type_id    = $request->payment_type_id;
@@ -126,6 +130,9 @@ class DepositController extends Controller
     {
         if(\Auth::user()->can('Edit Deposit'))
         {
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             if($deposit->created_by == \Auth::user()->creatorId())
             {
                 $validator = \Validator::make(
@@ -147,7 +154,7 @@ class DepositController extends Controller
 
                 $deposit->account_id         = $request->account_id;
                 $deposit->amount             = $request->amount;
-                $deposit->date               = $request->date;
+                $deposit->date               = $date;
                 $deposit->income_category_id = $request->income_category_id;
                 $deposit->payer_id           = $request->payer_id;
                 $deposit->payment_type_id    = $request->payment_type_id;

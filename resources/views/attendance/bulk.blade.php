@@ -107,7 +107,7 @@
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
                                         <div class="btn-box">
                                             {{ Form::label('date', __('Date'), ['class' => 'form-label']) }}
-                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : date('Y-m-d'), ['class' => 'month-btn form-control d_week ', 'autocomplete' => 'off']) }}
+                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : '', ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
@@ -246,16 +246,18 @@
 @endsection
 
 @push('script-page')
+@include('layouts.dateformat');
+
     <script>
-        $(document).ready(function() {
-            if ($('.daterangepicker').length > 0) {
-                $('.daterangepicker').daterangepicker({
-                    format: 'yyyy-mm-dd',
-                    locale: {
-                        format: 'YYYY-MM-DD'
-                    },
-                });
-            }
-        });
+        // $(document).ready(function() {
+        //     if ($('.daterangepicker').length > 0) {
+        //         $('.daterangepicker').daterangepicker({
+        //             format: 'yyyy-mm-dd',
+        //             locale: {
+        //                 format: 'YYYY-MM-DD'
+        //             },
+        //         });
+        //     }
+        // });
     </script>
 @endpush

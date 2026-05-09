@@ -13,6 +13,7 @@
 @endphp
 
 @push('script-page')
+@include('layouts.dateformat');
     <script>
         $('input[name="type"]:radio').on('change', function(e) {
             var type = $(this).val();
@@ -54,21 +55,28 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    var selected_department = $('#selected_department_id').val();
-                    $('.department_id').empty();
-                    var emp_selct = `<select class="form-control select department_id" name="department_id"
-                                            placeholder="{{__('Select Department')}}" >
-                                            </select>`;
-                    $('.department_div').html(emp_selct);
 
-                    $('.department_id').append('<option value=""> {{ __('Select Department') }} </option>');
+                    var selected_department = $('#selected_department_id').val();
+
+                    // Create select
+                    var emp_select = `
+                        <select class="form-control select department_id" name="department_id">
+                            <option value="">{{ __('Select Department') }}</option>
+                        </select>
+                    `;
+
+                    $('.department_div').html(emp_select);
+
+                    // Append options
                     $.each(data, function(key, value) {
-                        $('.department_id').append('<option value="' + key + '" ' + if(key == selected_department) + 'selected>' + value +
-                            '</option>');
+
+                        var selected = (key == selected_department) ? 'selected' : '';
+
+                        $('.department_id').append(
+                            '<option value="' + key + '" ' + selected + '>' + value + '</option>'
+                        );
                     });
-                    // new Choices('#choices-multiple', {
-                    //     removeItemButton: true,
-                    // });
+
                 }
             });
         }
@@ -122,7 +130,7 @@
                                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12 date">
                                         <div class="btn-box">
                                             {{ Form::label('date', __('Date'), ['class' => 'form-label']) }}
-                                            {{ Form::date('date', isset($_GET['date']) ? $_GET['date'] : '', ['class' => 'form-control month-btn']) }}
+                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : '', ['class' => 'form-control month-btn datepicker w-100']) }}
                                         </div>
                                     </div>
                                     @if (\Auth::user()->type != 'employee')

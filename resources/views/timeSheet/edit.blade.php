@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+     $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($timeSheet, ['route' => ['timesheet.update', $timeSheet->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -24,7 +25,9 @@
         @endif
         <div class="form-group col-md-6">
             {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::text('date', !empty($timeSheet->date)
+                                        ? \Carbon\Carbon::parse($timeSheet->date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('hours', __('Hours'), ['class' => 'col-form-label']) }}<x-required></x-required>

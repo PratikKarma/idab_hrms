@@ -7,6 +7,8 @@ use App\Models\AccountList;
 use App\Models\IncomeType;
 use App\Models\PaymentType;
 use App\Models\TransferBalance;
+use App\Models\Utility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,6 +50,7 @@ class TransferBalanceController extends Controller
         if(\Auth::user()->can('Create Transfer Balance'))
         {
 
+
             $validator = \Validator::make(
                 $request->all(), [
                                    'from_account_id' => 'required',
@@ -64,11 +67,13 @@ class TransferBalanceController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
 
             $transferbalance                  = new TransferBalance();
             $transferbalance->from_account_id = $request->from_account_id;
             $transferbalance->to_account_id   = $request->to_account_id;
-            $transferbalance->date            = $request->date;
+            $transferbalance->date            = $date;
             $transferbalance->amount          = $request->amount;
             $transferbalance->payment_type_id = $request->payment_type_id;
             $transferbalance->referal_id      = $request->referal_id;
@@ -140,9 +145,12 @@ class TransferBalanceController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
+                $companySettings = Utility::settings();
+                $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
                 $transferbalance->from_account_id = $request->from_account_id;
                 $transferbalance->to_account_id   = $request->to_account_id;
-                $transferbalance->date            = $request->date;
+                $transferbalance->date            = $date;
                 $transferbalance->amount          = $request->amount;
                 $transferbalance->payment_type_id = $request->payment_type_id;
                 $transferbalance->referal_id      = $request->referal_id;

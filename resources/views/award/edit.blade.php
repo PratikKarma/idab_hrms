@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($award, ['route' => ['award.update', $award->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -26,7 +27,9 @@
         </div>
         <div class="form-group col-md-6 col-lg-6">
             {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('date', null, ['class' => 'form-control d_week', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::text('date', !empty($award->date)
+                                        ? \Carbon\Carbon::parse($award->date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control datepicker', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-md-6 col-lg-6">
             {{ Form::label('gift', __('Gift'), ['class' => 'col-form-label']) }}<x-required></x-required>
@@ -44,3 +47,4 @@
 </div>
 
 {{ Form::close() }}
+@include('layouts.dateformat');

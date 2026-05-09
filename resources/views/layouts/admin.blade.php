@@ -586,7 +586,6 @@
         </script>
     @endif
 
-
     @if ($message = Session::get('success'))
         <script>
             show_toastr('Success', '{!! $message !!}', 'success');
@@ -687,6 +686,8 @@
     @endif
 
     @include('layouts.pwa_styles')
+    @include('layouts.dateformat');
+
 </body>
 
 </html>

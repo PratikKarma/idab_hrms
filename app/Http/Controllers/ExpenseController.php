@@ -8,6 +8,8 @@ use App\Models\Expense;
 use App\Models\ExpenseType;
 use App\Models\Payees;
 use App\Models\PaymentType;
+use App\Models\Utility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -68,10 +70,13 @@ class ExpenseController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             $expense                      = new Expense();
             $expense->account_id          = $request->account_id;
             $expense->amount              = $request->amount;
-            $expense->date                = $request->date;
+            $expense->date                = $date;
             $expense->expense_category_id = $request->expense_category_id;
             $expense->payee_id            = $request->payee_id;
             $expense->payment_type_id     = $request->payment_type_id;
@@ -142,9 +147,12 @@ class ExpenseController extends Controller
                     return redirect()->back()->with('error', $messages->first());
                 }
 
+                $companySettings = Utility::settings();
+                $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
                 $expense->account_id          = $request->account_id;
                 $expense->amount              = $request->amount;
-                $expense->date                = $request->date;
+                $expense->date                = $date;
                 $expense->expense_category_id = $request->expense_category_id;
                 $expense->payee_id            = $request->payee_id;
                 $expense->payment_type_id     = $request->payment_type_id;

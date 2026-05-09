@@ -236,12 +236,12 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-group ">
                                         {!! Form::label(' company_doj', __('Company Date Of Joining'), ['class'=> ' form-label']) !!}<span class="text-danger pl-1">*</span>
-                                        {{ Form::text('company_doj', 
+                                        {{ Form::date('company_doj', 
                                             !empty($employee->company_doj) 
                                                 ? \Carbon\Carbon::parse($employee->company_doj)->format($company_settings['site_date_format']) 
                                                 : null, 
                                             [
-                                                'class' => 'form-control datepicker w-100',
+                                                'class' => 'form-control w-100',
                                                 'required',
                                                 'autocomplete' => 'off',
                                                 'placeholder' => 'Select company date of joining',

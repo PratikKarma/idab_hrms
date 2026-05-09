@@ -1,5 +1,6 @@
 @php
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 
 {{ Form::model($resignation, ['route' => ['resignation.update', $resignation->id], 'method' => 'PUT', 'class' => 'needs-validation', 'novalidate']) }}
@@ -24,11 +25,15 @@
         @endif
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('notice_date', __('Resignation Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('notice_date', null, ['class' => 'form-control d_week','autocomplete'=>'off' , 'required' => 'required']) }}
+            {{ Form::text('notice_date',  !empty($resignation->notice_date)
+                                        ? \Carbon\Carbon::parse($resignation->notice_date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control datepicker','autocomplete'=>'off' , 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('resignation_date', __('Last Working Day'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('resignation_date', null, ['class' => 'form-control d_week','autocomplete'=>'off' , 'required' => 'required']) }}
+            {{ Form::text('resignation_date',  !empty($resignation->resignation_date)
+                                        ? \Carbon\Carbon::parse($resignation->resignation_date)->format($company_settings['site_date_format'])
+                                        : null, ['class' => 'form-control datepicker','autocomplete'=>'off' , 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-12">
             {{ Form::label('description', __('Reason'), ['class' => 'col-form-label']) }}<x-required></x-required>
@@ -42,3 +47,4 @@
 </div>
 
 {{ Form::close() }}
+@include('layouts.dateformat')

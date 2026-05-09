@@ -7,6 +7,7 @@ use App\Mail\ResignationSend;
 use App\Models\Resignation;
 use App\Models\User;
 use App\Models\Utility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -69,6 +70,10 @@ class ResignationController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
 
+            $companySettings = Utility::settings();
+            $notice_date = Carbon::createFromFormat($companySettings['site_date_format'], $request->notice_date)->format('Y-m-d');
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->resignation_date)->format('Y-m-d');
+
             $resignation = new Resignation();
             $user        = \Auth::user();
             if($user->type == 'employee')
@@ -80,8 +85,8 @@ class ResignationController extends Controller
             {
                 $resignation->employee_id = $request->employee_id;
             }
-            $resignation->notice_date      = $request->notice_date;
-            $resignation->resignation_date = $request->resignation_date;
+            $resignation->notice_date      = $notice_date;
+            $resignation->resignation_date = $date;
             $resignation->description      = $request->description ;
             $resignation->created_by       = \Auth::user()->creatorId();
 
@@ -94,7 +99,7 @@ class ResignationController extends Controller
                  $uArr = [
                 'assign_user'=>$employee->name,
                 'resignation_date'  =>$request->notice_date,
-                'notice_date' =>$request->resignation_date,
+                'notice_date' =>$date,
              ];
 
              $resp = Utility::sendEmailTemplate('employee_resignation', [$employee->email], $uArr);
@@ -104,8 +109,8 @@ class ResignationController extends Controller
                 $user           = User::find($employee->created_by);
                  $uArr = [
                 'assign_user'=>$user->name,
-                'resignation_date'  =>$request->notice_date,
-                'notice_date' =>$request->resignation_date,
+                'resignation_date'  =>$notice_date,
+                'notice_date' =>$date,
              ];
 
                 $resp = Utility::sendEmailTemplate('employee_resignation', [$user->email], $uArr);
@@ -173,9 +178,13 @@ class ResignationController extends Controller
                     $resignation->employee_id = $request->employee_id;
                 }
 
+                $companySettings = Utility::settings();
+                $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->resignation_date)->format('Y-m-d');
+                $notice_date = Carbon::createFromFormat($companySettings['site_date_format'], $request->notice_date)->format('Y-m-d');
 
-                $resignation->notice_date      = $request->notice_date;
-                $resignation->resignation_date = $request->resignation_date;
+
+                $resignation->notice_date      = $notice_date;
+                $resignation->resignation_date = $date;
                 $resignation->description      = $request->description;
 
                 $resignation->save();

@@ -72,13 +72,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('start_date', __('Start Date'), ['class' => 'col-form-label']) }}
-                {{ Form::text('start_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off']) }}
+                {{ Form::text('start_date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('end_date', __('End Date'), ['class' => 'col-form-label']) }}
-                {{ Form::text('end_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off']) }}
+                {{ Form::text('end_date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="form-group col-lg-12">
@@ -92,17 +92,18 @@
     <input type="submit" value="{{ __('Create') }}" class="btn btn-primary">
 </div>
 {{ Form::close() }}
+@include('layouts.dateformat');
 
 <script>
-    $(document).ready(function() {
-        var now = new Date();
-        var month = (now.getMonth() + 1);
-        var day = now.getDate();
-        if (month < 10) month = "0" + month;
-        if (day < 10) day = "0" + day;
-        var today = now.getFullYear() + '-' + month + '-' + day;
-        $('.current_date').val(today);
-    });
+    // $(document).ready(function() {
+    //     var now = new Date();
+    //     var month = (now.getMonth() + 1);
+    //     var day = now.getDate();
+    //     if (month < 10) month = "0" + month;
+    //     if (day < 10) day = "0" + day;
+    //     var today = now.getFullYear() + '-' + month + '-' + day;
+    //     $('.current_date').val(today);
+    // });
 </script>
 
 <script>

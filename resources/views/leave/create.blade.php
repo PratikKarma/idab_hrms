@@ -1,6 +1,7 @@
 @php
     $setting = App\Models\Utility::settings();
     $plan = App\Models\Utility::getChatGPTSettings();
+    $company_settings = \App\Models\Utility::settings();
 @endphp
 {{ Form::open(['url' => 'leave', 'method' => 'post', 'class' => 'needs-validation', 'novalidate']) }}
 <div class="modal-body">
@@ -53,13 +54,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('start_date', __('Start Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::date('start_date', null, ['class' => 'form-control datepicker d_week', 'required' => 'required', 'autocomplete' => 'off']) }}
+                {{ Form::date('start_date', \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'form-control datepicker', 'required' => 'required', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('end_date', __('End Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::date('end_date', null, ['class' => 'form-control datepicker d_week current_date', 'required' => 'required', 'autocomplete' => 'off']) }}
+                {{ Form::date('end_date', \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'form-control datepicker', 'required' => 'required', 'autocomplete' => 'off']) }}
             </div>
         </div>
     </div>

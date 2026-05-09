@@ -34,7 +34,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('date', __('Date'), ['class' => 'col-form-label']) }}
-                {{ Form::date('date', null, ['class' => 'form-control current_date', 'autocomplete' => 'off']) }}
+                {{ Form::text('date', null, ['class' => 'form-control datepicker w-100', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
@@ -83,6 +83,7 @@
     <input type="submit" value="{{ __('Create') }}" class="btn btn-primary">
 </div>
 {{ Form::close() }}
+@include('layouts.dateformat');
 
 <script>
     $(document).ready(function() {

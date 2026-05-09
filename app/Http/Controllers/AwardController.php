@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Mail\AwardSend;
 use App\Models\Utility;
 use App\Models\Webhook;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -63,6 +64,9 @@ class AwardController extends Controller
                 ]
             );
 
+            $companySettings = Utility::settings();
+            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
 
@@ -72,7 +76,7 @@ class AwardController extends Controller
             $award              = new Award();
             $award->employee_id = $request->employee_id;
             $award->award_type  = $request->award_type;
-            $award->date        = $request->date;
+            $award->date        = $date;
             $award->gift        = $request->gift;
             $award->description =  $request->description;
             $award->created_by  = \Auth::user()->creatorId();
@@ -88,7 +92,7 @@ class AwardController extends Controller
                 $uArr = [
                     'award_name' => $awardtype->name,
                     'employee_name' => $emp->name,
-                    'date' => $request->date,
+                    'date' => $date,
                 ];
                 Utility::send_slack_msg('new_award', $uArr);
             }
@@ -103,7 +107,7 @@ class AwardController extends Controller
                 $uArr = [
                     'award_name' => $awardtype->name,
                     'employee_name' => $emp->name,
-                    'date' => $request->date,
+                    'date' => $date,
                 ];
 
                 Utility::send_telegram_msg('new_award', $uArr);
@@ -119,7 +123,7 @@ class AwardController extends Controller
                 $uArr = [
                     'award_name' => $awardtype->name,
                     'employee_name' => $emp->name,
-                    'date' => $request->date,
+                    'date' => $date,
                 ];
 
                 Utility::send_twilio_msg($emp->phone, 'new_award', $uArr);
@@ -197,9 +201,12 @@ class AwardController extends Controller
 
                     return redirect()->back()->with('error', $messages->first());
                 }
+                $companySettings = Utility::settings();
+                $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
+
                 $award->employee_id = $request->employee_id;
                 $award->award_type  = $request->award_type;
-                $award->date        = $request->date;
+                $award->date        = $date;
                 $award->gift        = $request->gift;
                 $award->description = $request->description;
                 $award->save();

@@ -26,11 +26,11 @@
         @endif
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('notice_date', __('Resignation Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('notice_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::text('notice_date', null, ['class' => 'form-control ', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-6 col-md-6">
             {{ Form::label('resignation_date', __('Last Working Day'), ['class' => 'col-form-label']) }}<x-required></x-required>
-            {{ Form::text('resignation_date', null, ['class' => 'form-control d_week current_date', 'autocomplete' => 'off', 'required' => 'required']) }}
+            {{ Form::text('resignation_date', null, ['class' => 'form-control datepicker', 'autocomplete' => 'off', 'required' => 'required']) }}
         </div>
         <div class="form-group col-lg-12">
             {{ Form::label('description', __('Reason'), ['class' => 'col-form-label']) }}<x-required></x-required>
@@ -44,15 +44,15 @@
 </div>
 
 {{ Form::close() }}
-
+<!-- @include('layouts.dateformat'); -->
 <script>
-    $(document).ready(function() {
-        var now = new Date();
-        var month = (now.getMonth() + 1);
-        var day = now.getDate();
-        if (month < 10) month = "0" + month;
-        if (day < 10) day = "0" + day;
-        var today = now.getFullYear() + '-' + month + '-' + day;
-        $('.current_date').val(today);
-    });
+    // $(document).ready(function() {
+    //     var now = new Date();
+    //     var month = (now.getMonth() + 1);
+    //     var day = now.getDate();
+    //     if (month < 10) month = "0" + month;
+    //     if (day < 10) day = "0" + day;
+    //     var today = now.getFullYear() + '-' + month + '-' + day;
+    //     $('.current_date').val(today);
+    // });
 </script>

@@ -224,14 +224,33 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                            {!! Form::label(' company_doj', 'Company Date Of Joining' , ['class'=> 'form-label']) !!}<span class="text-danger pl-1">*</span>
-                                            {!! Form::date('company_doj', null, [
-                                            'class' => 'form-control w-100',
-                                            'id' => 'data_picker2',
-                                            'required' => 'required',
-                                            ]) !!}
-                                    </div>
+                                         <div class="form-group col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        {!! Form::label('company_doj', __('Company Date Of Joining'), ['class'=> 'form-label']) !!}<span class="text-danger pl-1">*</span>
+                                                        {{ Form::date('company_doj', null, [
+                                                            'class' => 'form-control w-100',
+                                                            'required',
+                                                            'autocomplete' => 'off',
+                                                            'placeholder' => 'Select company date of joining',
+                                                        ]) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        {{ Form::label('lunch_hours', __('Hours'), ['class' => 'form-label']) }}
+                                                        {{ Form::number('lunch_hours', 0, ['class' => 'form-control', 'min' => 0]) }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        {{ Form::label('lunch_minutes', 'Minutes') }}
+                                                        {{ Form::number('lunch_minutes', 0, ['class' => 'form-control', 'min' => 0, 'max' => 59]) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                 </div>
                             </div>

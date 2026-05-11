@@ -159,7 +159,8 @@ class EmployeeController extends Controller
             $hours = $request->lunch_hours ?? 0;
             $minutes = $request->lunch_minutes ?? 0;
 
-            $totalMinutes = ($hours * 60) + $minutes;
+            //---- Save in Minutes --------------//
+            $totalMinutes = (int)($hours * 60) + (int)($minutes);
 
             $employee = Employee::create(
                 [
@@ -304,6 +305,11 @@ class EmployeeController extends Controller
             $company_start_time = null;
             $company_end_time   = null;
 
+            $hours = $request->lunch_hours ?? 0;
+            $minutes = $request->lunch_minutes ?? 0;
+
+            $totalMinutes = (int)($hours * 60) + (int)($minutes);
+
             if (!empty($request->company_shift_time)) {
                 $times = explode('-', $request->company_shift_time);
                 $company_start_time = isset($times[0]) ? trim($times[0]) : null;
@@ -312,6 +318,8 @@ class EmployeeController extends Controller
 
             $employee->company_start_time = $company_start_time;
             $employee->company_end_time   = $company_end_time;
+            //---- Save in Minutes --------------//
+            $employee->lunch_break = $totalMinutes;
 
             if ($request->document) {
 

@@ -35,6 +35,7 @@ class Employee extends Model
         'bank_name',
         'bank_identifier_code',
         'branch_location',
+        'lunch_break',
         'tax_payer_id',
         'pf_id',
         'esic_id',

@@ -231,375 +231,379 @@
                                                 </div>
                                             @endif
                                         </div>
-                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <div class="form-group ">
-                                        {!! Form::label(' company_doj', __('Company Date Of Joining'), ['class'=> ' form-label']) !!}<span class="text-danger pl-1">*</span>
-                                            {{ Form::date('company_doj', null, 
-                                            [
-                                                'class' => 'form-control w-100',
-                                                'required',
-                                                'autocomplete' => 'off',
-                                                'placeholder' => 'Select company date of joining',
-                                            ]) 
-                                        }}
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            {{ Form::label('lunch_hours', 'Hours') }}
-                                            {{ Form::number('lunch_hours', 0, ['class' => 'form-control', 'min' => 0]) }}
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            {{ Form::label('lunch_minutes', 'Minutes') }}
-                                            {{ Form::number('lunch_minutes', 0, ['class' => 'form-control', 'min' => 0, 'max' => 59]) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 ">
-                        <div class="card em-card">
-                            <div class="card-header">
-                                <h5>{{ __('Document') }}</h6>
-                            </div>
-                            <div class="card-body employee-detail-create-body">
-                                @foreach ($documents as $key => $document)
-                                <div class="row">
-                                    <div class="form-group col-12 d-flex">
-                                        <div class="float-left col-4">
-                                            <label for="document"
-                                                class="float-left pt-1 form-label">{{ $document->name }} @if ($document->is_required == 1)
-                                                <span class="text-danger">*</span>
-                                                @endif
-                                            </label>
-                                        </div>
-                                        <div class="float-right col-8">
-                                            <input type="hidden" name="emp_doc_id[{{ $document->id }}]"
-                                                id="" value="{{ $document->id }}">
-                                            <div class="choose-files">
-                                                <label for="document[{{ $document->id }}]">
-                                                    <div class=" bg-primary document "> <i
-                                                            class="ti ti-upload "></i>{{ __('Choose file here') }}
-                                                    </div>
-                                                    <input type="file"
-                                                        class="form-control file  d-none @error('document') is-invalid @enderror"
-                                                        @if ($document->is_required == 1) required @endif
-                                                    name="document[{{ $document->id }}]"
-                                                    id="document[{{ $document->id }}]"
-                                                    data-filename="{{ $document->id . '_filename' }}"
-                                                    onchange="document.getElementById('{{ 'blah' . $key }}').src = window.URL.createObjectURL(this.files[0])">
-                                                </label>
-                                                <img id="{{ 'blah' . $key }}" src="" width="50%" />
-
+                                            <div class="form-group">
+                                                {!! Form::label('company_doj', __('Company Date Of Joining'), ['class'=> 'form-label']) !!}<span class="text-danger pl-1">*</span>
+                                                {{ Form::date('company_doj', null, [
+                                                    'class' => 'form-control w-100',
+                                                    'required',
+                                                    'autocomplete' => 'off',
+                                                    'placeholder' => 'Select company date of joining',
+                                                ]) }}
                                             </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                {{ Form::label('lunch_hours', __('Hours'), ['class' => 'form-label']) }}
+                                                {{ Form::number('lunch_hours', 0, ['class' => 'form-control', 'min' => 0]) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                {{ Form::label('lunch_minutes', 'Minutes') }}
+                                                {{ Form::number('lunch_minutes', 0, ['class' => 'form-control', 'min' => 0, 'max' => 59]) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="card em-card">
+                        <div class="card-header">
+                            <h5>{{ __('Document') }}</h6>
+                        </div>
+                        <div class="card-body employee-detail-create-body">
+                            @foreach ($documents as $key => $document)
+                            <div class="row">
+                                <div class="form-group col-12 d-flex">
+                                    <div class="float-left col-4">
+                                        <label for="document"
+                                            class="float-left pt-1 form-label">{{ $document->name }} @if ($document->is_required == 1)
+                                            <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                    </div>
+                                    <div class="float-right col-8">
+                                        <input type="hidden" name="emp_doc_id[{{ $document->id }}]"
+                                            id="" value="{{ $document->id }}">
+                                        <div class="choose-files">
+                                            <label for="document[{{ $document->id }}]">
+                                                <div class=" bg-primary document "> <i
+                                                        class="ti ti-upload "></i>{{ __('Choose file here') }}
+                                                </div>
+                                                <input type="file"
+                                                    class="form-control file  d-none @error('document') is-invalid @enderror"
+                                                    @if ($document->is_required == 1) required @endif
+                                                name="document[{{ $document->id }}]"
+                                                id="document[{{ $document->id }}]"
+                                                data-filename="{{ $document->id . '_filename' }}"
+                                                onchange="document.getElementById('{{ 'blah' . $key }}').src = window.URL.createObjectURL(this.files[0])">
+                                            </label>
+                                            <img id="{{ 'blah' . $key }}" src="" width="50%" />
 
                                         </div>
 
                                     </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="card em-card">
-                            <div class="card-header">
-                                <h5>{{ __('Bank Account Detail') }}</h5>
-                            </div>
-                            <div class="card-body employee-detail-create-body">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('account_holder_name', __('Account Holder Name'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('account_holder_name', old('account_holder_name'), [
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter account holder name',
-                                        ]) !!}
 
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('account_number', __('Account Number'), ['class' => 'form-label']) !!}
-                                        {!! Form::number('account_number', old('account_number'), [
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter account number',
-                                        ]) !!}
-
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('bank_name', __('Bank Name'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('bank_name', old('bank_name'), ['class' => 'form-control', 'placeholder' => 'Enter bank name']) !!}
-
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('bank_identifier_code', __('IFSC Code'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('bank_identifier_code', old('bank_identifier_code'), [
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter bank identifier code',
-                                        ]) !!}
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('branch_location', __('Branch Location'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('branch_location', old('branch_location'), [
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter branch location',
-                                        ]) !!}
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        {!! Form::label('tax_payer_id', __('Tax Payer/PAN Id'), ['class' => 'form-label']) !!}
-                                        {!! Form::text('tax_payer_id', old('tax_payer_id'), [
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter tax payer id',
-                                        ]) !!}
-                                    </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6 ">
+                    <div class="card em-card">
+                        <div class="card-header">
+                            <h5>{{ __('Bank Account Detail') }}</h5>
+                        </div>
+                        <div class="card-body employee-detail-create-body">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('account_holder_name', __('Account Holder Name'), ['class' => 'form-label']) !!}
+                                    {!! Form::text('account_holder_name', old('account_holder_name'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Enter account holder name',
+                                    ]) !!}
 
-                <div class="float-end">
-                    <button type="submit" class="btn  btn-primary">{{ 'Create' }}</button>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('account_number', __('Account Number'), ['class' => 'form-label']) !!}
+                                    {!! Form::number('account_number', old('account_number'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Enter account number',
+                                    ]) !!}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('bank_name', __('Bank Name'), ['class' => 'form-label']) !!}
+                                    {!! Form::text('bank_name', old('bank_name'), ['class' => 'form-control', 'placeholder' => 'Enter bank name']) !!}
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('bank_identifier_code', __('IFSC Code'), ['class' => 'form-label']) !!}
+                                    {!! Form::text('bank_identifier_code', old('bank_identifier_code'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Enter bank identifier code',
+                                    ]) !!}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('branch_location', __('Branch Location'), ['class' => 'form-label']) !!}
+                                    {!! Form::text('branch_location', old('branch_location'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Enter branch location',
+                                    ]) !!}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    {!! Form::label('tax_payer_id', __('Tax Payer/PAN Id'), ['class' => 'form-label']) !!}
+                                    {!! Form::text('tax_payer_id', old('tax_payer_id'), [
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Enter tax payer id',
+                                    ]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            </form>
+            <div class="float-end">
+                <button type="submit" class="btn  btn-primary">{{ 'Create' }}</button>
+            </div>
         </div>
+
+        </form>
     </div>
-    @endsection
-    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
-                    {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+</div>
+@endsection
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button> --}}
-                </div>
-                <form id="myForm">
-                    <div class="modal-body" id="newModalBody">
+            </div>
+            <form id="myForm">
+                <div class="modal-body" id="newModalBody">
 
-                    </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
                 </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
             </div>
         </div>
     </div>
-    @push('script-page')
-    @include('layouts.dateformat')
-    <script>
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const modal = document.querySelector('.modal.show');
+</div>
+@push('script-page')
+@include('layouts.dateformat')
+<script>
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const modal = document.querySelector('.modal.show');
 
-                if (modal) {
-                    submitForm();
-                } else {
-                    const mainForm = document.querySelector('.employee-create-form');
-                    if (mainForm) {
-                        mainForm.querySelector('button[type="submit"]')?.click();
-                    }
+            if (modal) {
+                submitForm();
+            } else {
+                const mainForm = document.querySelector('.employee-create-form');
+                if (mainForm) {
+                    mainForm.querySelector('button[type="submit"]')?.click();
                 }
             }
-        });
+        }
+    });
 
-        $('input[type="file"]').change(function(e) {
-            var file = e.target.files[0].name;
-            var file_name = $(this).attr('data-filename');
-            $('.' + file_name).append(file);
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            var d_id = $('.department_id').val();
-            getDesignation(d_id);
-        });
+    $('input[type="file"]').change(function(e) {
+        var file = e.target.files[0].name;
+        var file_name = $(this).attr('data-filename');
+        $('.' + file_name).append(file);
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        var d_id = $('.department_id').val();
+        getDesignation(d_id);
+    });
 
-        $(document).on('change', 'select[name=department_id]', function() {
-            var department_id = $(this).val();
-            getDesignation(department_id);
-        });
+    $(document).on('change', 'select[name=department_id]', function() {
+        var department_id = $(this).val();
+        getDesignation(department_id);
+    });
 
-        function getDesignation(did) {
+    function getDesignation(did) {
 
-            $.ajax({
-                url: '{{ route('employee.json') }}',
-                type: 'POST',
-                data: {
-                    "department_id": did,
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function(data) {
+        $.ajax({
+            url: '{{ route('employee.json') }}',
+            type: 'POST',
+            data: {
+                "department_id": did,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
 
-                    $('.designation_id').empty();
-                    var emp_selct = ` <select class="form-control  designation_id" name="designation_id" id="choices-multiple"
+                $('.designation_id').empty();
+                var emp_selct = ` <select class="form-control  designation_id" name="designation_id" id="choices-multiple"
                                             placeholder="Select Designation" >
                                             </select>`;
-                    $('.designation_div').html(emp_selct);
+                $('.designation_div').html(emp_selct);
 
-                    $('.designation_id').append('<option value="0"> {{ __('All') }} </option>');
-                    $.each(data, function(key, value) {
-                        $('.designation_id').append('<option value="' + key + '">' + value +
-                            '</option>');
-                    });
-                    new Choices('#choices-multiple', {
-                        removeItemButton: true,
-                    });
+                $('.designation_id').append('<option value="0"> {{ __('
+                    All ') }} </option>');
+                $.each(data, function(key, value) {
+                    $('.designation_id').append('<option value="' + key + '">' + value +
+                        '</option>');
+                });
+                new Choices('#choices-multiple', {
+                    removeItemButton: true,
+                });
 
 
-                }
-            });
-        }
-    </script>
-    <script>
-        $('#department_id').change(function() {
-            var department_id = $(this).val();
-            $.ajax({
-                url: '{{ route('employee.sub') }}',
-                type: "post",
-                data: {
-                    '_token': '{{ csrf_token() }}',
-                    'department_id': department_id
-                },
-                success: function(response) {
-                    $('#subdepartment_id').html(response)
-                }
-            })
-        })
-        // }
-    </script>
-    <script>
-        var globalRoute = '';
-        var html = "";
-        var globalBranch = '';
-        var globalDepartment = '';
-        var globalSubDepartment = '';
-        var globalDesignation = '';
-        var globalShift = '';
-        var newData = "";
-
-        function modalShow(data, route, title, section) {
-            html = "";
-            globalRoute = route;
-            newData = "";
-            switch (section) {
-                case 'department':
-                    getData('get-branch');
-                    break;
-                case 'subdepartment':
-                    getData('get-department');
-                    break;
-                case 'designation':
-                    getData('get-department');
-                    break;
-                default:
-                    break;
             }
-            $('#staticBackdropLabel').text(title);
+        });
+    }
+</script>
+<script>
+    $('#department_id').change(function() {
+        var department_id = $(this).val();
+        $.ajax({
+            url: '{{ route('employee.sub') }}',
+            employee.sub ') }}',
+            type: "post",
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'department_id': department_id
+            },
+            success: function(response) {
+                $('#subdepartment_id').html(response)
+            }
+        })
+    })
+    // }
+</script>
+<script>
+    var globalRoute = '';
+    var html = "";
+    var globalBranch = '';
+    var globalDepartment = '';
+    var globalSubDepartment = '';
+    var globalDesignation = '';
+    var globalShift = '';
+    var newData = "";
 
-            html += '<div class="row">';
-            $.each(data, function(key, value) {
-                $.each(value, function(key1, value1) {
-                    html += '<div class="col-lg-12 col-md-12 col-sm-12">\
+    function modalShow(data, route, title, section) {
+        html = "";
+        globalRoute = route;
+        newData = "";
+        switch (section) {
+            case 'department':
+                getData('get-branch');
+                break;
+            case 'subdepartment':
+                getData('get-department');
+                break;
+            case 'designation':
+                getData('get-department');
+                break;
+            default:
+                break;
+        }
+        $('#staticBackdropLabel').text(title);
+
+        html += '<div class="row">';
+        $.each(data, function(key, value) {
+            $.each(value, function(key1, value1) {
+                html += '<div class="col-lg-12 col-md-12 col-sm-12">\
                                                     <div class="form-group">\
                                                         <label class="form-label">' + key1.toUpperCase() + '</label>';
 
-                    if (value1 != '') {
-                        html += '<div class="form-icon-user">\
+                if (value1 != '') {
+                    html += '<div class="form-icon-user">\
                                                         <select class="form-control" name="' + key1 + '">';
-                        value1 = JSON.parse(value1);
-                        if (newData != '') {
-                            value1 = newData;
-                        }
-                        $.each(value1, function(key2, value2) {
-                            html += '<option value="' + key2 + '">' + value2 + '</option>';
-                        })
-                        html += '</select>\
+                    value1 = JSON.parse(value1);
+                    if (newData != '') {
+                        value1 = newData;
+                    }
+                    $.each(value1, function(key2, value2) {
+                        html += '<option value="' + key2 + '">' + value2 + '</option>';
+                    })
+                    html += '</select>\
                                                     </div>';
-                    } else {
-                        html += '<div class="form-icon-user">\
+                } else {
+                    html += '<div class="form-icon-user">\
                                                             <input name="' + key1 + '" id="' + key1 + '" placeholder="' +
-                            key1
-                            .toUpperCase() + '" class="form-control">\
+                        key1
+                        .toUpperCase() + '" class="form-control">\
                                                         </div>';
-                    }
+                }
 
-                    html += '   </div>\
+                html += '   </div>\
                                                     </div>';
-                })
-            });
-            html += '</div>';
-            $('#newModalBody').html(html);
-            $('#staticBackdrop').modal('show');
-        }
+            })
+        });
+        html += '</div>';
+        $('#newModalBody').html(html);
+        $('#staticBackdrop').modal('show');
+    }
 
-        function submitForm() {
-            var input = [];
-            $("#myForm :input").each(function() {
-                var value = $(this).val();
-                var name = $(this).attr('name');
-                input.push({
-                    'name': name,
-                    'value': value
-                });
+    function submitForm() {
+        var input = [];
+        $("#myForm :input").each(function() {
+            var value = $(this).val();
+            var name = $(this).attr('name');
+            input.push({
+                'name': name,
+                'value': value
             });
-            var url = "<?= url('') ?>/" + globalRoute;
+        });
+        var url = "<?= url('') ?>/" + globalRoute;
 
-            $.ajax({
-                type: "post",
-                url: url,
-                data: input,
-                success: function(response) {
-                    closeModal();
-                    response = JSON.parse(response);
-                    switch (response.section) {
-                        case 'branch':
-                            $('.branch_id').html(response.output);
-                            break;
-                        case 'department':
-                            $('.department_id').html(response.output);
-                            break;
-                        case 'subdepartment':
-                            $('.subdepartment_id').html(response.output);
-                            break;
-                        case 'designation':
-                            $('.designation_id').html(response.output);
-                            break;
-                        case 'shift':
-                            $('.shift_id').html(response.output);
-                            break;
-                        default:
-                            break;
-                    }
+        $.ajax({
+            type: "post",
+            url: url,
+            data: input,
+            success: function(response) {
+                closeModal();
+                response = JSON.parse(response);
+                switch (response.section) {
+                    case 'branch':
+                        $('.branch_id').html(response.output);
+                        break;
+                    case 'department':
+                        $('.department_id').html(response.output);
+                        break;
+                    case 'subdepartment':
+                        $('.subdepartment_id').html(response.output);
+                        break;
+                    case 'designation':
+                        $('.designation_id').html(response.output);
+                        break;
+                    case 'shift':
+                        $('.shift_id').html(response.output);
+                        break;
+                    default:
+                        break;
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function closeModal() {
-            $('#staticBackdrop').modal('hide');
-            html = "";
-        }
+    function closeModal() {
+        $('#staticBackdrop').modal('hide');
+        html = "";
+    }
 
-        function getData(url) {
-            var url = "<?= url('') ?>/" + url;
-            $.ajax({
-                type: "get",
-                url: url,
-                async: false,
-                success: function(response) {
-                    newData = JSON.parse(response);
-                }
-            });
-        }
-    </script>
-    @endpush
+    function getData(url) {
+        var url = "<?= url('') ?>/" + url;
+        $.ajax({
+            type: "get",
+            url: url,
+            async: false,
+            success: function(response) {
+                newData = JSON.parse(response);
+            }
+        });
+    }
+</script>
+@endpush

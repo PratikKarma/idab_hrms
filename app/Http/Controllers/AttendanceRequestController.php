@@ -20,7 +20,6 @@ class AttendanceRequestController extends Controller
         }
 
         $companySettings = Utility::settings();
-        $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
         $type = $request->input('type', 'monthly');
 
         $query = AttendanceRequest::with([
@@ -31,7 +30,7 @@ class AttendanceRequestController extends Controller
             ->latest();
 
         if ($type == 'daily' && $request->filled('date')) {
-            $query->whereDate('requested_at', $date);
+            $query->whereDate('requested_at', $request->date);
         } elseif ($type == 'monthly' && $request->filled('month')) {
             $month = date('m', strtotime($request->month));
             $year  = date('Y', strtotime($request->month));

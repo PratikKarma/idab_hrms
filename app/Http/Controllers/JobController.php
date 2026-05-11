@@ -212,9 +212,30 @@ class JobController extends Controller
         return redirect()->route('job.index')->with('success', __('Job  successfully deleted.'));
     }
 
-    public function career($id, $lang)
+    public function career(Request $request, $id, $lang)
     {
-        $jobs = Job::where('created_by', $id)->with('createdBy')->get();
+        $jobs = Job::where('created_by', $id)->where('status', 'active')->with('createdBy');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $jobs   = $jobs->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('position', 'LIKE', "%{$search}%")
+                    ->orWhere('skill', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('branch')) {
+            $jobs = $jobs->where('branch', $request->branch);
+        }
+
+        if ($request->filled('category')) {
+            $jobs = $jobs->where('category', $request->category);
+        }
+
+        $jobs = $jobs->get();
+
         \Session::put('lang', $lang);
 
         \App::setLocale($lang);
@@ -223,6 +244,13 @@ class JobController extends Controller
         $companySettings['footer_text']     = \DB::table('settings')->where('created_by', $id)->where('name', 'footer_text')->first();
         $companySettings['company_favicon'] = \DB::table('settings')->where('created_by', $id)->where('name', 'company_favicon')->first();
         $companySettings['company_logo']    = \DB::table('settings')->where('created_by', $id)->where('name', 'company_logo')->first();
+        $companySettings['company_name']    = \DB::table('settings')->where('created_by', $id)->where('name', 'company_name')->first();
+        $companySettings['company_address'] = \DB::table('settings')->where('created_by', $id)->where('name', 'company_address')->first();
+        $companySettings['company_city']    = \DB::table('settings')->where('created_by', $id)->where('name', 'company_city')->first();
+        $companySettings['company_state']   = \DB::table('settings')->where('created_by', $id)->where('name', 'company_state')->first();
+        $companySettings['company_zipcode'] = \DB::table('settings')->where('created_by', $id)->where('name', 'company_zipcode')->first();
+        $companySettings['company_country'] = \DB::table('settings')->where('created_by', $id)->where('name', 'company_country')->first();
+        $companySettings['company_telephone'] = \DB::table('settings')->where('created_by', $id)->where('name', 'company_telephone')->first();
         $companySettings['metakeyword']     = \DB::table('settings')->where('created_by', $id)->where('name', 'metakeyword')->first();
         $companySettings['metadesc']        = \DB::table('settings')->where('created_by', $id)->where('name', 'metadesc')->first();
         $languages                          = Utility::languages();
@@ -233,8 +261,11 @@ class JobController extends Controller
             $currantLang = !empty($user) && !empty($user->lang) ? $user->lang : 'en';
         }
 
+        $branches   = Branch::where('created_by', $id)->pluck('name', 'id');
+        $categories = JobCategory::where('created_by', $id)->pluck('title', 'id');
+        $company    = User::find($id);
 
-        return view('job.career', compact('companySettings', 'jobs', 'languages', 'currantLang', 'id'));
+        return view('job.career', compact('companySettings', 'company', 'jobs', 'languages', 'currantLang', 'id', 'branches', 'categories'));
     }
 
     public function jobRequirement($code, $lang)

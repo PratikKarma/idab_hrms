@@ -82,10 +82,10 @@
 <body class="{{ $color }}">
     <div class="job-wrapper">
         <div class="job-content">
-            <nav class="navbar">
+             <nav class="navbar">
                 <div class="container">
                     <a class="navbar-brand" href="javascript:void(0)">
-                        <img src="{{ $logo . '/' . (isset($company_logo_light) && !empty($company_logo_light) ? $company_logo_light . '?' . time() : 'logo-light.png' . '?' . time()) }}"
+                        <img src="{{ $logo . '/' . (isset($company_logo_light) && !empty($company_logo_light) ? $company_logo_light .'?'.time() : 'logo-light.png' .'?'.time()) }}"
                             alt="logo" style="width: 90px">
                     </a>
                 </div>
@@ -96,11 +96,10 @@
                 </div>
                 <div class="container">
                     <div class="job-banner-content text-center text-white">
-                        <h1 class="text-white mb-3">
+                        <h1 class="text-primary mb-2">
                             {{ __(' We help') }} <br> {{ __('businesses grow') }}
                         </h1>
-                        <p>{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
-                        </p>
+                        <p class="text-black">{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
                     </div>
                 </div>
             </section>
@@ -194,24 +193,32 @@
                                 @if (!empty($job->visibility) && in_array('profile', explode(',', $job->visibility)))
                                     <div class="form-group col-md-6 ">
                                         {{ Form::label('profile', __('Profile'), ['class' => 'form-label']) }}<x-required></x-required>
-                                        <input type="file" class="form-control" name="profile" id="profile"
+                                        <input type="file" class="form-control document" name="profile" id="profile"
                                             data-filename="profile_create"
                                             onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
                                             required>
                                         <img id="blah" src="" class="mt-3" width="25%" />
                                         <p class="profile_create"></p>
+                                         <div id="documentPreviewWrapper" class="d-flex align-items-center text-muted mt-1 documentPreviewWrapper">
+                                            <span id="" class="me-2 documentPreviewIcon" style="display: none;"></span>
+                                            <span class="documentPreview"></span>
+                                        </div>
+
                                     </div>
                                 @endif
 
                                 @if (!empty($job->visibility) && in_array('resume', explode(',', $job->visibility)))
                                     <div class="form-group col-md-6 ">
                                         {{ Form::label('resume', __('CV / Resume'), ['class' => 'form-label']) }}<x-required></x-required>
-                                        <input type="file" class="form-control" name="resume" id="resume"
+                                        <input type="file" class="form-control document" name="resume" id="resume"
                                             data-filename="resume_create"
-                                            onchange="document.getElementById('blah1').src = window.URL.createObjectURL(this.files[0])"
                                             required>
                                         <img id="blah1" class="mt-3" src="" width="25%" />
                                         <p class="resume_create"></p>
+                                        <div id="documentPreviewWrapper" class="d-flex align-items-center text-muted mt-1 documentPreviewWrapper">
+                                            <span id="" class="me-2 documentPreviewIcon" style="display: none;"></span>
+                                            <span class="documentPreview"></span>
+                                        </div>
 
                                     </div>
                                 @endif
@@ -301,6 +308,7 @@
 @stack('custom-scripts')
 @if ($enable_cookie['enable_cookie'] == 'on')
     @include('layouts.cookie_consent')
+    @include('layouts.dateformat');
 @endif
 
 </body>

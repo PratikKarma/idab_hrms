@@ -28,7 +28,6 @@ class AttendanceEmployeeController extends Controller
             $department->prepend('All', '');
 
               $companySettings = Utility::settings();
-            $date = Carbon::createFromFormat($companySettings['site_date_format'], $request->date)->format('Y-m-d');
 
             if (\Auth::user()->type == 'employee') {
                 $emp = !empty(\Auth::user()->employee) ? \Auth::user()->employee->id : 0;
@@ -53,8 +52,8 @@ class AttendanceEmployeeController extends Controller
                             $end_date,
                         ]
                     );
-                } elseif ($request->type == 'daily' && !empty($date)) {
-                    $attendanceEmployee->where('date', $date);
+                } elseif ($request->type == 'daily' && !empty($request->date)) {
+                    $attendanceEmployee->where('date', $request->date);
                 } else {
                     $month      = date('m');
                     $year       = date('Y');
@@ -111,8 +110,8 @@ class AttendanceEmployeeController extends Controller
                             $end_date,
                         ]
                     );
-                } elseif ($request->type == 'daily' && !empty($date)) {
-                    $attendanceEmployee->where('date', $date);
+                } elseif ($request->type == 'daily' && !empty($request->date)) {
+                    $attendanceEmployee->where('date', $request->date);
                 } else {
 
                     $month      = date('m');

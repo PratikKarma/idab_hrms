@@ -132,7 +132,7 @@
                                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-12 col-12 date">
                                         <div class="btn-box">
                                             {{ Form::label('date', __('Date'), ['class' => 'form-label']) }}
-                                            {{ Form::text('date', isset($_GET['date']) ? $_GET['date'] : \Carbon\Carbon::now()->format($company_settings['site_date_format']), ['class' => 'form-control month-btn datepicker w-100']) }}
+                                            {{ Form::date('date', isset($_GET['date']) ? $_GET['date'] : null, ['class' => 'form-control month-btn w-100']) }}
                                         </div>
                                     </div>
                                     @if (\Auth::user()->type != 'employee')

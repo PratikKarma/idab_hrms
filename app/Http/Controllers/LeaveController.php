@@ -167,6 +167,7 @@ class LeaveController extends Controller
 
     public function edit(LocalLeave $leave)
     {
+
         if (\Auth::user()->can('Edit Leave')) {
             if ($leave->created_by == \Auth::user()->creatorId()) {
 
@@ -181,6 +182,8 @@ class LeaveController extends Controller
                 // $leavetypes = LeaveType::where('created_by', '=', \Auth::user()->creatorId())->get()->pluck('title', 'id');
                 $leavetypes      = LeaveType::where('created_by', '=', \Auth::user()->creatorId())->get();
 
+
+                // dd($leave->status);
                 return view('leave.edit', compact('leave', 'employees', 'leavetypes'));
             } else {
                 return response()->json(['error' => __('Permission denied.')], 401);
@@ -255,7 +258,7 @@ class LeaveController extends Controller
                     $leave->total_leave_days = $total_leave_days;
                     $leave->leave_reason     = $request->leave_reason;
                     $leave->remark           = $request->remark;
-                    // $leave->status           = $request->status;
+                    $leave->status           = $request->status;
 
                     $leave->save();
 

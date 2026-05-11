@@ -54,20 +54,20 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('start_date', __('Start Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::date('start_date', null, ['class' => 'form-control datepicker d_week', 'required' => 'required', 'autocomplete' => 'off']) }}
+                {{ Form::date('start_date', null, ['class' => 'form-control d_week', 'required' => 'required', 'autocomplete' => 'off']) }}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {{ Form::label('end_date', __('End Date'), ['class' => 'col-form-label']) }}<x-required></x-required>
-                {{ Form::date('end_date', null, ['class' => 'form-control datepicker d_week current_date', 'required' => 'required', 'autocomplete' => 'off']) }}
+                {{ Form::date('end_date', null, ['class' => 'form-control d_week current_date', 'required' => 'required', 'autocomplete' => 'off']) }}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                {{ Form::label('leave_reason', __('Leave Reason'), ['class' => 'col-form-label']) }}<x-required></x-required>
+                {{ Form::label('leave_reason', __('Leave Note'), ['class' => 'col-form-label']) }}<x-required></x-required>
                 {{ Form::textarea('leave_reason', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => __('Leave Reason'), 'rows' => '3']) }}
             </div>
         </div>

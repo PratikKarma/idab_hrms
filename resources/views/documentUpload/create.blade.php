@@ -31,7 +31,7 @@ $plan = App\Models\Utility::getChatGPTSettings();
                 {{ Form::label('document', __('Document'), ['class' => 'form-label']) }}<x-required></x-required>
                 <div class="choose-file form-group ">
                     <label for="document">
-                        <input type="file" class="form-control doc_data" name="documents" id="documents"
+                        <input type="file" class="form-control doc_data w-100" name="documents" id="documents"
                             data-filename="documents" required>
                         <hr>
                         <img id="blah" width="100" style="display: none;" />

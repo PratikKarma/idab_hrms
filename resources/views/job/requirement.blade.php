@@ -83,27 +83,24 @@
 <body class="{{ $themeColor }}">
     <div class="job-wrapper">
         <div class="job-content">
-            <nav class="navbar">
+             <nav class="navbar">
                 <div class="container">
                     <a class="navbar-brand" href="javascript:void(0)">
                         <img src="{{ $logo . '/' . (isset($company_logo_light) && !empty($company_logo_light) ? $company_logo_light .'?'.time() : 'logo-light.png' .'?'.time()) }}"
                             alt="logo" style="width: 90px">
-
                     </a>
                 </div>
             </nav>
             <section class="job-banner">
                 <div class="job-banner-bg">
                     <img src="{{ asset('/storage/uploads/job/banner.png') }}" alt="">
-
                 </div>
                 <div class="container">
                     <div class="job-banner-content text-center text-white">
-                        <h1 class="text-white mb-3">
+                        <h1 class="text-primary mb-2">
                             {{ __(' We help') }} <br> {{ __('businesses grow') }}
                         </h1>
-                        <p>{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
-                        </p>
+                        <p class="text-black">{{ __('Work there. Find the dream job you’ve always wanted..') }}</p>
                     </div>
                 </div>
             </section>
